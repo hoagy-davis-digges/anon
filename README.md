@@ -1,14 +1,14 @@
 # anon
 
-[![Build Status](https://secure.travis-ci.org/edsu/anon.png)](http://travis-ci.org/edsu/anon)
-[![Gitter chat](https://badges.gitter.im/edsu/anon.png)](https://gitter.im/edsu/anon)
+[![Build Status](https://secure.travis-ci.org/edsu/anon.svg)](http://travis-ci.org/edsu/anon)
+[![Gitter chat](https://badges.gitter.im/edsu/anon.svg)](https://gitter.im/edsu/anon)
 
 This little coffee script will watch Wikipedia for edits from a set of
 named IP ranges and will tweet when it notices one.  It was inspired by
 [@parliamentedits](https://twitter.com/parliamentedits) and is used to make
-[@congressedits](https://twitter.com/congressedits) available.
-
-If you are curious, the default IP ranges for the US Congress in the `config.json.template` file came from [GovTrack](https://github.com/govtrack/govtrack.us-web/blob/master/website/middleware.py). You can learn more about the significance of Congressional edits to Wikipedia [here](https://en.wikipedia.org/wiki/U.S._Congressional_staff_edits_to_Wikipedia) and [here](https://en.wikipedia.org/wiki/Wikipedia:Congressional_staffer_edits).
+[@congressedits](https://twitter.com/congressedits) available. It is now being
+used a [community](#community) of users to post selected Wikipedia edits to 
+Twitter.
 
 ## Run
 
@@ -24,8 +24,8 @@ To run anon you will need to:
 app you create has read/write permission so it can tweet)
 1. add IP ranges/names to `config.json`
 1. modify status template if desired
-1. `./anon.coffee` (you may want to run this in a screen or tmux session, or on a cloud service like Heroku (see below))
-1. have some :coffee: and wait
+1. `./anon.coffee` (you may want to use our shared instance in Wikimedia Labs,
+see below)
 
 ### IP Ranges
 
@@ -41,24 +41,12 @@ or with an array of start/end IP addresses:
 These two are equivalent, but the former is a bit faster, and easier to read.
 The latter is convenient if your range is difficult to express using a netmask.
 
-### Transparency
-
-If you end up running an anon bot we would love to document the IP address
-ranges you use for transparency purposes. Please add just the ranges
-stanza of your onfig file to the `conf` directory. Name the file using your 
-Twitter account, e.g. for congressedits:
-
-    conf/congressedits.json
-
-You can use a service like [ARIN Online](http://whois.arin.net/ui) to look up
-IP address ranges by organization name.
-
 If you would like your configuration file to reference the IP addresses in 
 the external file just use the filename. So instead of:
 
 ```javascript
 {
-  "nick": "congressedits",
+  "nick": "anon1234",
   "accounts": [
     {
       "consumer_key": "",
@@ -67,9 +55,8 @@ the external file just use the filename. So instead of:
       "access_token_secret": "",
       "template": "{{page}} Wikipedia article edited anonymously from {{name}} {{&url}}",
       "ranges": {
-        "US House of Representatives": [
-          ["143.231.0.0", "143.231.255.255"],
-          ["74.119.128.0", "74.119.131.255"]
+        "Home Network": [
+          ["192.168.1.1", "192.168.255.255"]
         ]
       }
     }
@@ -81,7 +68,7 @@ you would have:
 
 ```javascript
 {
-  "nick": "congressedits",
+  "nick": "anon1234",
   "accounts": [
     {
       "consumer_key": "",
@@ -89,7 +76,7 @@ you would have:
       "access_token": "",
       "access_token_secret": "",
       "template": "{{page}} Wikipedia article edited anonymously from {{name}} {{&url}}",
-      "ranges": "conf/congressedits.json"
+      "ranges": "ranges.json"
     }
   ]
 }
@@ -116,15 +103,12 @@ file, use the `--config` parameter:
 
     ./anon.coffee --config test.config
 
-### Running on Heroku
+### Running on Wikimedia Labs
 
-A Procfile is included to facilitate running anon on the Heroku cloud service. Once you've satisfied the [Heroku prerequisites](https://devcenter.heroku.com/articles/getting-started-with-nodejs#prerequisites) and [setup Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs#local-workstation-setup), you can run anon via:
-
-    heroku create
-    git push heroku master
-    heroku ps:scale worker=1
-
-Read more on [running Node.js applications on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs).
+We have a shared instance of anon running on [Wikimedia
+Labs](http://tools.wmflabs.org/anon). This is useful once you have a
+configuration that is working and you'd like to have the running instance
+in labs use it.
 
 ## Develop
 
@@ -180,12 +164,101 @@ Here are the Wikipedias that it currently supports:
 * [Ukrainian](https://uk.wikipedia.org)
 * [Vietnamese](https://vi.wikipedia.org)
 * [Volapük](https://vo.wikipedia.org)
-* [Wikidata](https://wd.wikipedia.org)
-* [Wikimedia Commons](https://co.wikipedia.org)
+
+Additionally, the following miscellaneous Wikimedia sites: 
+* [Wikidata](https://wikidata.org)
+* [Wikimedia Commons](https://commons.wikimedia.org)
 
 If you would like to have another one added please add a ticket to the
-[wikichanges](https://github.com/edsu/wikichanges/issues?state=closed)
+[wikichanges](https://github.com/edsu/wikichanges/issues)
 issue tracker.
+
+## Community
+
+Below is a list of known anon instances. Please feel free to add, in an alphabetic order, your
+own by sending a pull request.
+
+* [@2dekameredits](https://twitter.com/2dekameredits)
+* [@5thEstateWiki](https://twitter.com/5thEstateWiki)
+* [@academyedits](https://twitter.com/academyedits)
+* [@AnonGoIWPEdits](https://twitter.com/anongoiwpedits)
+* [@AUSgovEdits](https://twitter.com/AUSgovEdits)
+* [@AussieParlEdits](https://twitter.com/AussieParlEdits)
+* [@bcgovedits](https://twitter.com/bcgovedits)
+* [@bclegedits](https://twitter.com/bclegedits)
+* [@beehive_edits](https://twitter.com/beehive_edits)
+* [@berlinEDUedits](https://twitter.com/berlinEDUedits)
+* [@BotDetectorCamb](https://twitter.com/BotDetectorCamb)
+* [@BrockWikiEdits](https://twitter.com/BrockWikiEdits)
+* [@brwikiedits](https://twitter.com/brwikiedits)
+* [@bundesedit](https://twitter.com/bundesedit)
+* [@ciaedits](https://twitter.com/ciaedits)
+* [@cmuedits](https://twitter.com/cmuedits)
+* [@congresseditors](https://twitter.com/congresseditors)
+* [@congressedits](https://twitter.com/congressedits)
+* [@CPDWikiEdits](https://twitter.com/CPDWikiEdits)
+* [@DailEireannEdit](https://twitter.com/DailEireannEdit)
+* [@EduskuntaEdit](https://twitter.com/EduskuntaEdit)
+* [@EstadoEdita](https://twitter.com/EstadoEdita)
+* [@euroedit](https://twitter.com/euroedit)
+* [@FloridaEdits](https://twitter.com/FloridaEdits)
+* [@FTingetWikiEdit](https://twitter.com/FTingetWikiEdit)
+* [@gccaedits](https://twitter.com/gccaedits)
+* [@goldmanedits](https://twitter.com/goldmanedits)
+* [@gruedits](https://twitter.com/gruedits)
+* [@harvardedits](https://twitter.com/harvardedits)
+* [@hgbedit](https://twitter.com/hgbedit)
+* [@IEGoveEdits](https://twitter.com/IEGovEdits)
+* [@IrishGovEdits](https://twitter.com/IrishGovEdits)
+* [@israeledits](https://twitter.com/israeledits)
+* [@ItaGovEdits](https://twitter.com/ItaGovEdits)
+* [@kameredits](https://twitter.com/kameredits)
+* [@LAGovEdits](https://twitter.com/lagovedits)
+* [@LATechEdits](https://twitter.com/LATechEdits)
+* [@lc_edits](https://twitter.com/lc_edits)
+* [@LRSwikiedits](https://twitter.com/LRSwikiedits)
+* [@michigan_edits](https://twitter.com/michigan_edits)
+* [@MITedits](https://twitter.com/MITedits)
+* [@monsantoedits](https://twitter.com/monsantoedits)
+* [@NATOedits](https://twitter.com/NATOedits)
+* [@NCGAedits](https://twitter.com/NCGAedits)
+* [@nsaedits](https://twitter.com/nsaedits)
+* [@nsgovedits](https://twitter.com/nsgovedits)
+* [@NYPDedits](https://twitter.com/NYPDedits)
+* [@ODTUedits](https://twitter.com/ODTUedits)
+* [@oiledits](https://twitter.com/oiledits)
+* [@ONgovEdits](https://twitter.com/ONgovEdits)
+* [@OverheidEdits](https://twitter.com/OverheidEdits)
+* [@PakistanEdits](https://twitter.com/PakistanEdits)
+* [@Parlamento_Wiki](https://twitter.com/Parlamento_Wiki)
+* [@parliamentedits](https://twitter.com/parliamentedits)
+* [@parlizaedits](https://twitter.com/parlizaedits)
+* [@pentagon-edits](https://twitter.com/pentagonedits)
+* [@phrmaedits](https://twitter.com/phrmaedits)
+* [@politikedits](https://twitter.com/politikedits)
+* [@rcmp_edits](https://twitter.com/rcmp_edits)
+* [@Regierungsedits](https://twitter.com/Regierungsedits)
+* [@reichstagedits](https://twitter.com/reichstagedits)
+* [@RialtasWatch](https://twitter.com/RialtasWatch)
+* [@RiksdagWikiEdit](https://twitter.com/RiksdagWikiEdit)
+* [@RuGovEdits_en](https://twitter.com/RuGovEdits_en)
+* [@RuGovEdits](https://twitter.com/RuGovEdits)
+* [@stanfordedits](https://twitter.com/stanfordedits)
+* [@swissgovedit](https://twitter.com/swissgovedit)
+* [@TBMMedits](https://twitter.com/TBMMedits)
+* [@TSKedits](https://twitter.com/TSKedits)
+* [@UaGovEdits_en](https://twitter.com/UaGovEdits_en)
+* [@UaGovEdits](https://twitter.com/UaGovEdits)
+* [@UaGoveEdits_ru](https://twitter.com/UaGovEdits_ru)
+* [@uc_wiki_edits](https://twitter.com/uc_wiki_edits)
+* [@UChicago_edits](https://twitter.com/UChicago_edits)
+* [@un_edits](https://twitter.com/un_edits)
+* [@valleyedits](https://twitter.com/valleyedits)
+* [@WhitehallEdits](https://twitter.com/WhitehallEdits)
+* [@WikiCreeperEdit](https://twitter.com/WikiCreeperEdit)
+* [@wikiAssemblee](https://twitter.com/wikiAssemblee)
+* [@wikistorting](https://twitter.com/wikistorting)
+* [@zagovedits](https://twitter.com/zagovedits)
 
 ## License:
 
